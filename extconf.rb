@@ -7,10 +7,11 @@
 require 'mkmf'
 
 $CFLAGS = RUBY_VERSION =~ /1\.9/ ? '-DRUBY19' : ''
+$CFLAGS += " -Wall -pedantic"
 
 #$LDFLAGS = "-lshadow"
 
-if( ! (ok = have_library("shadow","getspent")) )
+if !(ok = have_library("shadow","getspent"))
   $LDFLAGS = ""
   ok = have_func("getspent")
 end
@@ -26,4 +27,16 @@ if ok
     $CFLAGS += ' -DSOLARIS'
   end
   create_makefile("shadow")
+else
+  osx_ok = have_func( "endpwent" )
+  osx_ok &= have_func( "getpwent" )
+  osx_ok &= have_func( "getpwnam" )
+  osx_ok &= have_func( "getpwnam_r" )
+  osx_ok &= have_func( "getpwuid" )
+  #osx_ok &= have_func( "getuid_r" )
+  osx_ok &= have_func( "setpassent" )
+  osx_ok &= have_func( "setpwent" )
+  $CFLAGS += ' -DOSX'
+  create_makefile("shadow") if osx_ok
 end
+
