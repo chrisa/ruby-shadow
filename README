@@ -7,9 +7,12 @@ License: Free for any use with your own risk!
 
 1. What's this
 
-This is the module which used when you access linux shadow password files.  
+This module provides tools to read, and, on Linux, append, information related to password files.
 
-Recent versions work on both Linux and Solaris.
+This version works on Linux, OS X and Solaris.  On OS X, <pwd.h> is used, and
+the functions found are translated to their equivalents in libshadow.
+
+Note 
 
 2. install
 
@@ -22,20 +25,20 @@ make
  still present, but no promises about earlier versions of Ruby.
 
 3. Shadow::Passwd module's methods
+____________________________________________________
+ Method                 | Linux  | Solaris  | OS X
+____________________________________________________
+ getspent               |   *    |    *     |  *    
+ getspnam(name)         |   *    |    *     |  *    
+ setspent               |   *    |    *     |  *    
+ endspent               |   *    |    *     |  *    
+ fgetspent(file)        |   *    |    *     |  N    
+ sgetspent(str)         |   *    |    N     |  *    
+ putspent(entry,file)   |   *    |    *     |  N    
+ lckpwdf,lock           |   *    |    *     |  N    
+ ulckpwdf,unlock        |   *    |    *     |  N    
+ lock?                  |   *    |    *     |  N    
 
-getspent
-getspnam(name)
-setspent
-endspent
-fgetspent(file)
-sgetspent(str)
-putspent(entry,file)
-lckpwdf,lock
-ulckpwdf,unlock
-lock?
-
-* Note: sgetspent is not available under Solaris and some other operating
-  systems.  In current versions, that method will be completely missing.
 
 
 4. Structure
@@ -43,8 +46,7 @@ lock?
 Shadow::Passwd::Entry (Struct::PasswdEntry)
        sp_namp - pointer to null-terminated user name.
        sp_pwdp - pointer to null-terminated password.
-       sp_lstchg  -  days  since  Jan  1,  1970 password was last
-                     changed.
+       sp_lstchg  -  days  since  Jan  1,  1970 password was last changed.
        sp_min - days before which password may not be changed.
        sp_max - days after which password must be changed.
        sp_warn - days before password is to expire that  user  is
