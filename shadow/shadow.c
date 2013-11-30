@@ -70,7 +70,6 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -100,7 +99,6 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -126,7 +124,6 @@ rb_shadow_getspent(VALUE self)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
-		      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -155,7 +152,6 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -187,8 +183,8 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
   centry.sp_max = FIX2INT(val[4]);
   centry.sp_warn = FIX2INT(val[5]);
   centry.sp_inact = FIX2INT(val[6]);
-  centry.sp_expire = FIX2INT(val[8]);
-  centry.sp_flag = FIX2INT(val[9]);
+  centry.sp_expire = FIX2INT(val[7]);
+  centry.sp_flag = FIX2INT(val[8]);
 
   result = putspent(&centry,cfile);
 
